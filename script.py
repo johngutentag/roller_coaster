@@ -154,37 +154,50 @@ plt.clf()
 
 # write function to plot inversions by coaster at a park here:
 
+def inversion_plot(dataset, park_name):
+    
+    filter = lambda x: all(name.lower() in x.lower() for name in park_name)
+    df = dataset.loc[dataset['park'].apply(filter)]
+    ax = plt.subplot()
+    ax.set_xlabel('Roller Coaster Name')
+    ax.set_ylabel('Number of Inversion')
+    ax.set_title(park_name + ' Inverted Roller Coasters')
+    plt.bar(df['name'], df['num_inversions'])
+    plt.xticks(rotation=90)
+    plt.show()
 
-
-
-
-
-
-
-
-
+inversion_plot(roller_coasters, 'Disneyland Park')
 plt.clf()
 
 # write function to plot pie chart of operating status here:
 
+def operating_status(dataset):
+    operating = dataset[dataset['status'] == 'status.operating']
+    closed = dataset[dataset['status'] == 'status.closed.definitely']
+    counts = [len(operating), len(closed)]
+    ax = plt.subplot()
+    ax.set_title('Operating vs Closed Roller Coasters')
+    plt.pie(counts, autopct='%0.1f%%', labels=['Operating', 'Closed'])
+    plt.show()
 
-
-
-
-
-
-
+operating_status(roller_coasters)
 
 
 plt.clf()
 
 # write function to create scatter plot of any two numeric columns here:
 
+def scatterplot(dataset, column1, column2):
+    x = dataset[column1]
+    y = dataset[column2]
+    ax = plt.subplot()
+    plt.scatter(x, y)
+    ax.set_title(string.capwords(column2) + ' vs ' + string.capwords(column1))
+    ax.set_ylabel(string.capwords(column2))
+    ax.set_xlabel(string.capwords(column1))
+    plt.show()
 
-
-
-
-
+scatterplot(roller_coasters, 'speed', 'length')
 
 
 
